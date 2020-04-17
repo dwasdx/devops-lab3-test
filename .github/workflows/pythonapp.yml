@@ -36,6 +36,7 @@ jobs:
   push-to-dockerhub:
 
     runs-on: ubuntu-latest
+    needs: [build]
 
     steps:
     - name: Login to DockerHub
@@ -44,4 +45,4 @@ jobs:
     - name: Container Building
       run: docker build -t ${{ secrets.DOCKERHUB_USERNAME }}/phonebook -f Dockerfile .
     - name: Container Uploading to DockerHub
-      run: docker push ${{ secrets.DOCKERHUB_USERNAME }}/phonebook
+      run: docker push ${{ secrets.DOCKERHUB_USERNAME }}/phonebook:ver_$GITHUB_RUN_NUMBER
