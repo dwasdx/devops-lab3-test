@@ -64,7 +64,7 @@ jobs:
   
   CD:
     runs-on: localhost
-#     needs: [build-and-push]
+    needs: [build-and-push]
     steps:
       - name:  run app
-        run: echo $PROJECT_NAME
+        run: docker run -it -v ./phonebook.db:/phonebook/phonebook.db ${{ secrets.DOCKERHUB_USERNAME }}/$PROJECT_NAME:ver_$GITHUB_RUN_NUMBER
