@@ -68,4 +68,4 @@ jobs:
     needs: [build-and-push]
     steps:
       - name:  run app
-        run: (echo "print all" && echo 0) |  docker run -t -v $PWD/phonebook.db:/phonebook/phonebook.db ${{ secrets.DOCKERHUB_USERNAME }}/$PROJECT_NAME:ver_$GITHUB_RUN_NUMBER
+        run: (echo "print all" && echo 0) |  docker run -i -v $PWD/phonebook.db:/phonebook/phonebook.db ${{ secrets.DOCKERHUB_USERNAME }}/$PROJECT_NAME:ver_$GITHUB_RUN_NUMBER
