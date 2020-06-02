@@ -68,4 +68,4 @@ jobs:
     steps:
       - name:  run app
 #         run: docker run -it -v 
-        run: pwd
+        run: echo $PWD
