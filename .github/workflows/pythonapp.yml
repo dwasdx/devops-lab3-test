@@ -1,4 +1,6 @@
 name: Phonebook application
+env:
+  PROJECT_NAME: phonebook
 
 on:
   push:
@@ -44,7 +46,7 @@ jobs:
       run: |
         pip install pytest
         pytest ./test_via_pytest.py
-
+  
   build-and-push:
 
     runs-on: ubuntu-latest
@@ -55,6 +57,15 @@ jobs:
       run:  echo ${{ secrets.DOCKERHUB_PASSWORD }} | docker login -u ${{ secrets.DOCKERHUB_USERNAME }} --password-stdin
     - uses: actions/checkout@master
     - name: Container Building
-      run: docker build -t ${{ secrets.DOCKERHUB_USERNAME }}/phonebook:ver_$GITHUB_RUN_NUMBER -f Dockerfile .
+      run: docker build -t ${{ secrets.DOCKERHUB_USERNAME }}/$PROJECT_NAME:ver_$GITHUB_RUN_NUMBER -f Dockerfile .
     - name: Container Uploading to DockerHub
-      run: docker push ${{ secrets.DOCKERHUB_USERNAME }}/phonebook:ver_$GITHUB_RUN_NUMBER
+      run: docker push ${{ secrets.DOCKERHUB_USERNAME }}/$PROJECT_NAME:ver_$GITHUB_RUN_NUMBER
+    
+  
+  CD:
+    runs-on: MBP-Andrej
+    needs: [build-and-push]
+    steps:
+      - name:  run app
+#         run: docker run -it -v 
+        run: pwd
